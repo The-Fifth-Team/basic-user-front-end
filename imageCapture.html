@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <video autoplay></video>
+<button type="button" id="screenshot-button">Take screenshot</button>
+<button type="button" id="capture-button">Take screenshot</button>
+<img src="" alt="" id = "screenshot">
+  <script>
+    const constraints = {
+      video: true
+    };
+
+    const video = document.querySelector('video');
+    const screenshotButton = document.querySelector('#screenshot-button');
+    const canvas = document.createElement('canvas');
+
+    const captureVideoButton = document.querySelector('#capture-button');
+    const img = document.querySelector('#screenshot');
+
+
+
+
+
+    captureVideoButton.onclick = function() {
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then((stream) => {
+        video.srcObject = stream
+        console.log(stream)
+      }
+    ).catch((err) => {
+      console.log(err)
+    });
+    };
+
+    screenshotButton.onclick = function() {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      img.src = canvas.toDataURL('image/webp');
+    };
+
+  </script>
+
+
+</body>
+
+</html>
